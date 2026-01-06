@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Arduino Dashboard</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        .box {
+            background: white;
+            padding: 20px;
+            margin: 20px auto;
+            width: 90%;
+            max-width: 400px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #007aff;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Arduino Dashboard</h1>
+
+<div class="box">
+    <div>Luminosità</div>
+    <div id="lux" class="value">--</div>
+</div>
+
+<script>
+function aggiornaDati() {
+    fetch("http://IP-ARDUINO/data")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("lux").textContent = data.lux;
+        })
+        .catch(err => {
+            document.getElementById("lux").textContent = "ERR";
+        });
+}
+
+setInterval(aggiornaDati, 2000);
+aggiornaDati();
+</script>
+
+</body>
+</html>
